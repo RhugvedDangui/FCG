@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Confirmed — Fitness Conscious Goa</title>
+    <title>Registration Confirmed &mdash; Fitness Conscious Goa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -48,8 +48,7 @@
         }
 
         .thankyou-icon {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: linear-gradient(135deg, #FF4444, #FF6B35);
             border-radius: 50%;
             display: flex;
@@ -92,11 +91,7 @@
         }
 
         .thankyou-message p:last-child { margin-bottom: 0; }
-
-        .thankyou-message .highlight {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
+        .highlight { color: var(--text-primary); font-weight: 600; }
 
         .event-details-box {
             background: rgba(255,68,68,0.05);
@@ -107,11 +102,9 @@
             text-align: left;
         }
 
-        [data-theme="dark"] .event-details-box {
-            background: rgba(255,68,68,0.1);
-        }
+        [data-theme="dark"] .event-details-box { background: rgba(255,68,68,0.1); }
 
-        .event-details-box div {
+        .event-details-box .detail-row {
             display: flex;
             align-items: center;
             gap: 0.6rem;
@@ -120,11 +113,7 @@
             padding: 0.25rem 0;
         }
 
-        .event-details-box i {
-            color: #FF6B35;
-            width: 14px;
-            font-size: 0.78rem;
-        }
+        .event-details-box i { color: #FF6B35; width: 14px; font-size: 0.78rem; }
 
         .bib-note {
             font-size: 0.82rem;
@@ -144,6 +133,18 @@
             letter-spacing: 0.05em;
             margin-top: 1rem;
         }
+
+        .email-note {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .email-note i { color: #FF6B35; }
 
         .thankyou-actions {
             display: flex;
@@ -165,41 +166,10 @@
             transition: all 0.25s ease;
         }
 
-        .btn-home {
-            background: linear-gradient(135deg, #FF4444, #FF6B35);
-            color: #fff;
-            box-shadow: 0 6px 20px rgba(255,68,68,0.3);
-        }
-
+        .btn-home { background: linear-gradient(135deg,#FF4444,#FF6B35); color:#fff; box-shadow:0 6px 20px rgba(255,68,68,0.3); }
         .btn-home:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(255,68,68,0.4); }
-
-        .btn-events {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1.5px solid var(--border-color);
-        }
-
-        .btn-events:hover { border-color: #FF4444; color: #FF4444; }
-
-        .btn-register-again {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1.5px solid var(--border-color);
-        }
-
-        .btn-register-again:hover { border-color: #FF4444; color: #FF4444; }
-
-        .email-note {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
-
-        .email-note i { color: #FF6B35; }
+        .btn-events, .btn-register-again { background: transparent; color: var(--text-primary); border: 1.5px solid var(--border-color); }
+        .btn-events:hover, .btn-register-again:hover { border-color: #FF4444; color: #FF4444; }
 
         @media (max-width: 480px) {
             .thankyou-card { padding: 2rem 1.25rem; }
@@ -213,20 +183,18 @@
 
     <main class="thankyou-page">
         <div class="thankyou-card">
-            <div class="thankyou-icon">
-                <i class="fas fa-check"></i>
-            </div>
+            <div class="thankyou-icon"><i class="fas fa-check"></i></div>
             <h1>Registration Confirmed!</h1>
-            <p class="subtitle">Thank you for registering for the Fitness Conscious Goa Run! 🏃‍♂️🏃‍♀️</p>
+            <p class="subtitle" id="successSubtitle">Thank you for registering!</p>
 
             <div class="thankyou-message">
-                <p>Your registration and payment have been <span class="highlight">successfully received</span>. Your registration is now confirmed. 🎉</p>
+                <p>Your registration and payment have been <span class="highlight">successfully received</span>. Your registration is now confirmed.</p>
 
                 <div class="event-details-box">
-                    <div><i class="fas fa-running"></i> <strong>Fitness Conscious Goa Run</strong></div>
-                    <div><i class="fas fa-calendar-alt"></i> 18 October 2026</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Farmagudi Residency, Ponda, Goa</div>
-                    <div><i class="fas fa-road"></i> Distance: 7 KM</div>
+                    <div class="detail-row"><i class="fas fa-running"></i> <strong id="successEventTitle">Loading...</strong></div>
+                    <div class="detail-row" id="successDateRow" style="display:none;"><i class="fas fa-calendar-alt"></i> <span id="successDate"></span></div>
+                    <div class="detail-row" id="successLocationRow" style="display:none;"><i class="fas fa-map-marker-alt"></i> <span id="successLocation"></span></div>
+                    <div class="detail-row" id="successTimeRow" style="display:none;"><i class="fas fa-clock"></i> <span id="successTime"></span></div>
                 </div>
 
                 <div class="bib-note">
@@ -234,8 +202,8 @@
                     Your <strong>BIB number</strong> and further event details will be shared with you separately.
                 </div>
 
-                <p style="margin-top:1rem;">Thank you for being part of <strong>Fitness Conscious Goa Run</strong>.</p>
-                <p class="tagline">Run • Stay Fit • Stay Healthy!</p>
+                <p style="margin-top:1rem;">Thank you for being part of <strong id="successEventTitleFooter">this event</strong>.</p>
+                <p class="tagline">Run &bull; Stay Fit &bull; Stay Healthy!</p>
             </div>
 
             <p class="email-note">
@@ -252,12 +220,50 @@
 
     <script src="src/nav-simple.js"></script>
     <script>
-        // Register Again — go back to the same event if available
-        const params = new URLSearchParams(window.location.search);
+        const params  = new URLSearchParams(window.location.search);
         const eventId = params.get('event');
+
+        // Register Again button
         const btn = document.getElementById('registerAgainBtn');
-        if (eventId && btn) {
-            btn.href = `event-registration.html?event=${eventId}`;
+        if (eventId && btn) btn.href = 'event-registration.html?event=' + eventId;
+
+        // Fetch real event details
+        if (eventId) {
+            fetch('api/events/get-events.php')
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.success || !data.data) return;
+                    const event = data.data.find(e => String(e.id) === String(eventId));
+                    if (!event) return;
+
+                    document.getElementById('successSubtitle').textContent =
+                        'Thank you for registering for ' + event.title + '!';
+
+                    ['successEventTitle', 'successEventTitleFooter'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = event.title;
+                    });
+
+                    if (event.formatted_date) {
+                        document.getElementById('successDate').textContent = event.formatted_date;
+                        document.getElementById('successDateRow').style.display = 'flex';
+                    }
+                    if (event.location) {
+                        document.getElementById('successLocation').textContent = event.location;
+                        document.getElementById('successLocationRow').style.display = 'flex';
+                    }
+                    if (event.formatted_time) {
+                        document.getElementById('successTime').textContent = event.formatted_time;
+                        document.getElementById('successTimeRow').style.display = 'flex';
+                    }
+                })
+                .catch(() => {
+                    const el = document.getElementById('successEventTitle');
+                    if (el) el.textContent = 'your event';
+                });
+        } else {
+            const el = document.getElementById('successEventTitle');
+            if (el) el.textContent = 'your event';
         }
     </script>
 </body>

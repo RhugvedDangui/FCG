@@ -8,38 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy via FTP
+    name: Trigger cPanel Git Pull
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 2
-
-      - name: Deploy to cPanel via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          local-dir: ./
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.env
-            **/uploads/**
-            **/pdf_extracted/**
-            **/vendor/**
-            **/fitness_conscious_goa*.sql
-            **/fitnesconciousgoa.sql
-            **/sample-events.sql
-            **/test-*.php
-            **/debug-*.php
-            **/*.log
-            **/*.md
-            .gitignore
-            composer.lock
+      - name: Trigger cPanel Git pull via webhook
+        run: |
+          curl -s -X GET "${{ secrets.CPANEL_GIT_WEBHOOK_URL }}" \
+            --max-time 30 \
+            -w "\nHTTP Status: %{http_code}\n"

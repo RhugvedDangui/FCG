@@ -13,6 +13,7 @@ class WebhookEmailHandler {
     
     public function __construct() {
         $this->emailService = new EmailService();
+        // Get fresh connection to avoid MySQL server gone away on long-running webhooks
         $this->conn = DatabaseConfig::getConnection();
     }
     
