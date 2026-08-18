@@ -3,7 +3,7 @@ name: Deploy to GoDaddy cPanel
 on:
   push:
     branches:
-      - main  # triggers on every push to main
+      - main
 
 jobs:
   deploy:
@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
-          fetch-depth: 2  # needed for changed-files detection
+          fetch-depth: 2
 
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -24,8 +24,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
-          local-dir: ./          # root of your repo
-          server-dir: /public_html/  # destination on server
+          local-dir: ./
+          server-dir: /public_html/
           exclude: |
             **/.git*
             **/.git*/**
