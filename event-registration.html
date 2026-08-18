@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Registration - Fitness Conscious Goa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- CSS references -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/event-registration.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <script>
+        // Initialize theme immediately to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <a href="events.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Events</span>
+    </a>
+
+    <!-- Main Container -->
+    <div class="registration-page-container">
+        <!-- Event Registration Form -->
+        <div class="registration-content">
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="spinner"></div>
+                <p>Loading event details...</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-state" id="errorState" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Event Not Found</h3>
+                <p>The requested event could not be found or is no longer available.</p>
+                <a href="events.html" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Events
+                </a>
+            </div>
+
+            <!-- Registration Form Container -->
+            <div class="form-container" id="formContainer" style="display: none;">
+                <!-- Event Info Section -->
+                <div class="event-info-section">
+                    <div class="event-info-left">
+                        <h4 id="eventTitle"></h4>
+                        <div class="event-info-meta">
+                            <span id="eventDate"><i class="fas fa-calendar-alt"></i> --</span>
+                            <span id="eventLocation"><i class="fas fa-map-marker-alt"></i> --</span>
+                        </div>
+                    </div>
+                    <div class="event-price-info">
+                        <span class="price-label">Fee</span>
+                        <span class="price-amount" id="eventPrice">₹0</span>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <form id="registrationForm" class="registration-form">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Personal Information
+                        </h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobileNumber">Mobile Number *</label>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender *</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address *</label>
+                            <textarea id="address" name="address" rows="3" required placeholder="Enter your complete address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Event Specific Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-tshirt"></i>
+                            Event Details
+                        </h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tshirtSize">T-shirt Size *</label>
+                                <select id="tshirtSize" name="tshirtSize" required>
+                                    <option value="">Select Size</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                    <option value="XXXL">XXXL</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="runnerGroup">Runner's Group (Optional)</label>
+                                <input type="text" id="runnerGroup" name="runnerGroup" placeholder="e.g., Morning Joggers, Speed Demons, Weekend Warriors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-phone-alt"></i>
+                            Emergency Contact
+                        </h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="emergencyContactName">Emergency Contact Person's Name *</label>
+                                <input type="text" id="emergencyContactName" name="emergencyContactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergencyContactMobile">Emergency Contact Mobile Number *</label>
+                                <input type="tel" id="emergencyContactMobile" name="emergencyContactMobile" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ID Proof -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-id-card"></i>
+                            Identity Verification
+                        </h3>
+                        <div class="form-group">
+                            <label for="idProof">ID Proof with Birth Date *</label>
+                            <input type="file" id="idProof" name="idProof" accept=".jpg,.jpeg,.png,.pdf" required>
+                            <small class="form-help">Upload a clear photo/scan of your ID proof (Aadhaar Card, Passport, Driving License, etc.) that shows your birth date. Accepted formats: JPG, PNG, PDF (Max 5MB)</small>
+                        </div>
+                    </div>
+
+                    <!-- Payment Section -->
+                    <div class="form-section payment-section" id="paymentSection" style="display: none;">
+                        <h3 class="section-title">
+                            <i class="fas fa-credit-card"></i>
+                            Payment Details
+                        </h3>
+                        <div class="payment-summary">
+                            <div class="payment-item">
+                                <span class="payment-label">Registration Fee:</span>
+                                <span class="payment-amount" id="paymentAmount">₹0</span>
+                            </div>
+                            <div class="payment-total">
+                                <span class="payment-label">Total Amount:</span>
+                                <span class="payment-amount" id="totalAmount">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Submit -->
+                    <div class="form-section">
+                        <div class="checkbox-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="terms-link" id="openTnC">Terms and Conditions</a>
+                            </label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Register & Pay</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- T&C Modal -->
+    <div class="tnc-modal-overlay" id="tncModal" role="dialog" aria-modal="true" aria-labelledby="tncTitle">
+        <div class="tnc-modal">
+            <div class="tnc-modal-header">
+                <h2 id="tncTitle"><i class="fas fa-file-alt"></i> Terms &amp; Conditions</h2>
+                <button class="tnc-close" id="closeTnC" aria-label="Close">&times;</button>
+            </div>
+            <div class="tnc-modal-body">
+                <ol class="tnc-list">
+                    <li><strong>Registration Fee:</strong> The registration fee is non-refundable once the registration is confirmed and payment is made.</li>
+                    <li><strong>Registration Confirmation:</strong> Registration is confirmed only after successful payment and submission of the required participant details.</li>
+                    <li><strong>Participant Details:</strong> Participants must provide accurate information during registration. Any incorrect information may result in issues with the bib, certificate, or event records.</li>
+                    <li><strong>Age Categories:</strong> Participants will be considered under the age category applicable on the date of the event.</li>
+                    <li><strong>Bib Number:</strong> Each registered participant will receive one bib. Bibs are non-transferable and must not be exchanged or sold to another person.</li>
+                    <li><strong>Event Date &amp; Venue:</strong> The organisers reserve the right to modify the event schedule, route, venue, or other arrangements if required due to safety, weather, government instructions, or unforeseen circumstances.</li>
+                    <li><strong>Safety &amp; Health:</strong> Participants are responsible for ensuring that they are physically fit and medically capable of participating in the run. Participants should stop if they feel unwell during the event and seek assistance from event officials.</li>
+                    <li><strong>Children/Minors:</strong> Participants below the applicable age of majority must participate with the consent of a parent/guardian.</li>
+                    <li><strong>Cancellation:</strong> In case the event is cancelled or postponed due to circumstances beyond the organisers' control, the organisers will communicate the revised arrangements to registered participants.</li>
+                    <li><strong>Personal Belongings:</strong> Participants are responsible for their personal belongings. The organisers are not responsible for loss or damage to personal property.</li>
+                    <li><strong>Photography &amp; Video:</strong> Photographs and videos may be taken during the event and may be used by the organisers for event promotion, publicity and social media.</li>
+                    <li><strong>Disqualification:</strong> The organisers reserve the right to disqualify participants for cheating, impersonation, misuse of bibs, misconduct, or violation of event rules.</li>
+                    <li><strong>Prizes:</strong> Prize categories and eligibility will be as announced by the organisers. The organisers' decision regarding results and prize distribution will be final.</li>
+                    <li><strong>Acceptance:</strong> By completing the registration and making payment, the participant confirms that they have read, understood and agreed to these Terms &amp; Conditions.</li>
+                </ol>
+            </div>
+            <div class="tnc-modal-footer">
+                <button class="tnc-agree-btn" id="tncAgree">
+                    <i class="fas fa-check"></i> I Agree
+                </button>
+                <button class="tnc-close-btn" id="tncClose">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="src/nav-simple.js"></script>
+    
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Event Registration Script -->
+    <script src="assets/js/event-registration.js"></script>
+
+    <script>
+        const tncModal   = document.getElementById('tncModal');
+        const openBtn    = document.getElementById('openTnC');
+        const closeBtn   = document.getElementById('closeTnC');
+        const tncClose   = document.getElementById('tncClose');
+        const tncAgree   = document.getElementById('tncAgree');
+        const termsCheck = document.getElementById('terms');
+
+        function openModal(e) {
+            if (e) e.preventDefault();
+            tncModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            tncModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        openBtn?.addEventListener('click', openModal);
+        closeBtn?.addEventListener('click', closeModal);
+        tncClose?.addEventListener('click', closeModal);
+
+        // "I Agree" ticks the checkbox and closes
+        tncAgree?.addEventListener('click', () => {
+            if (termsCheck) termsCheck.checked = true;
+            closeModal();
+        });
+
+        // Close on overlay click
+        tncModal?.addEventListener('click', (e) => {
+            if (e.target === tncModal) closeModal();
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+
+</html>

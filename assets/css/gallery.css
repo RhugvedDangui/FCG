@@ -1,0 +1,135 @@
+/* Gallery specific styles */
+.gallery-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 1;
+}
+
+.gallery-container.dragging {
+  cursor: grabbing;
+}
+
+.gallery-container.dragging .card-img {
+  transform: scale(0.85);
+}
+
+.gallery-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: fit-content;
+  height: fit-content;
+  user-select: none;
+  padding: 10vw;
+  gap: 8vw;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.gallery-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.gallery-column:nth-child(even) {
+  margin-top: 6rem;
+}
+
+.gallery-container:not(.dragging) .card-img:hover {
+  transform: scale(1.05);
+}
+
+.card-img {
+  width: 18vw;
+  aspect-ratio: 1;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Remove background text color change when dragging */
+
+.gallery-text-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+.gallery-text-wrapper h1 {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  font-size: 8vw;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  opacity: 0.3;
+}
+
+.gallery-text-wrapper p {
+  font-size: 1.5vw;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Navigation adjustments for gallery page */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .navbar {
+  background: rgba(26, 26, 26, 0.95);
+}
+
+@media (max-width: 768px) {
+  .card-img {
+    width: 35vw;
+  }
+  
+  .gallery-text-wrapper h1 {
+    font-size: 12vw;
+  }
+  
+  .gallery-text-wrapper p {
+    font-size: 3vw;
+    padding: 0 20px;
+  }
+  
+  .gallery-wrapper {
+    gap: 15vw;
+  }
+}

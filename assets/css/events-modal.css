@@ -1,0 +1,664 @@
+/* Event Registration Modal Styles */
+.registration-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal-content {
+    background: var(--card-background);
+    border-radius: 15px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color, #333333);
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color, #333333);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-background);
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-family: 'Oswald', sans-serif;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 107, 107, 0.1);
+    color: var(--accent-color);
+}
+
+.modal-body {
+    padding: 2rem;
+    color: var(--text-primary);
+    background: var(--card-background);
+}
+
+.modal-body h4 {
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color, #333333);
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    background: var(--card-background);
+}
+
+/* Registration Form Styles */
+.event-info-section {
+    background: var(--card-background);
+    color: var(--text-primary);
+    padding: 2rem;
+    margin: -2rem -2rem 2rem -2rem;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+    border-bottom: 3px solid var(--primary-color);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .event-info-section {
+    box-shadow: 0 2px 20px rgba(255, 255, 255, 0.05);
+}
+
+.event-info-section .modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: var(--background-color);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-info-section .modal-close:hover {
+    background: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+}
+
+.event-info-section h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.event-info-section h4::before {
+    content: '';
+    width: 4px;
+    height: 30px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.event-info-section p {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Event Price Display */
+.event-price-info {
+    margin: 1.5rem 0 0 0;
+    padding: 1.25rem;
+    background: var(--background-color);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .event-price-info {
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+.price-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-label::before {
+    content: '💰';
+    font-size: 1.2rem;
+}
+
+.price-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-family: 'Oswald', sans-serif;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-amount.free-event {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    border-color: #10b981;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.price-amount.free-event::before {
+    content: '🎉';
+    font-size: 1.1rem;
+}
+
+.price-amount.paid-event {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b35);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+}
+
+.price-amount.paid-event::before {
+    content: '₹';
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.registration-form {
+    margin-bottom: 1.5rem;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Payment Section Styles */
+.payment-section {
+    display: none;
+    background: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-section h4,
+.payment-section h3 {
+    color: var(--text-primary);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+.payment-summary {
+    background: var(--background-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.payment-row:last-child {
+    margin-bottom: 0;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.payment-method-group {
+    margin-top: 1rem;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 0.75rem;
+    background: var(--card-background);
+    color: var(--text-primary);
+}
+
+.payment-method:hover {
+    border-color: var(--primary-color);
+    background: var(--background-color);
+}
+
+.payment-method input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+}
+
+.payment-method-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.payment-method-info i {
+    font-size: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background: var(--background-color);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-light);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--card-background);
+    box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
+}
+
+.form-group input[type="file"] {
+    padding: 1rem;
+    border: 2px dashed var(--border-color);
+    background: var(--card-background);
+    cursor: pointer;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: var(--primary-color);
+    background: var(--background-color);
+}
+
+.form-group input[type="file"]:hover {
+    border-color: var(--primary-color);
+    background: rgba(79, 172, 254, 0.05);
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: var(--accent-color);
+    background: rgba(255, 107, 107, 0.05);
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-weight: 400;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.form-error {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-error i {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* Loading and Success States */
+.registration-loading {
+    text-align: center;
+    padding: 3rem 2rem;
+}
+
+.registration-loading i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.registration-loading h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.registration-success {
+    text-align: center;
+    padding: 2rem;
+}
+
+.registration-success i {
+    font-size: 3.5rem;
+    color: var(--success-color, #10b981);
+    margin-bottom: 1rem;
+}
+
+.registration-success h4 {
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.registration-success .success-details {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.registration-success .success-details p {
+    margin: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.registration-success .success-details i {
+    font-size: 1rem;
+    color: var(--success-color, #10b981);
+}
+
+/* Button Styles */
+.modal-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.modal-btn.secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.modal-btn.secondary:hover {
+    background: var(--surface-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.modal-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* No Events Message */
+.no-events-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.no-events-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.no-events-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 1rem;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+        max-width: 95vw;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+    
+    .modal-btn {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .event-info-section {
+        padding: 1rem;
+        margin: -1.5rem -1rem 1rem -1rem;
+    }
+    
+    .modal-header, .modal-body, .modal-footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.75rem;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    .modal-content {
+        border-radius: 10px;
+    }
+    
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+}

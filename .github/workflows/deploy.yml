@@ -1,0 +1,45 @@
+name: Deploy to GoDaddy cPanel
+
+on:
+  push:
+    branches:
+      - main  # triggers on every push to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy via FTP
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # needed for changed-files detection
+
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          local-dir: ./          # root of your repo
+          server-dir: /public_html/  # destination on server
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env
+            **/uploads/**
+            **/pdf_extracted/**
+            **/vendor/**
+            **/fitness_conscious_goa*.sql
+            **/fitnesconciousgoa.sql
+            **/sample-events.sql
+            **/test-*.php
+            **/debug-*.php
+            **/*.log
+            **/*.md
+            .gitignore
+            composer.lock

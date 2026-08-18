@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Conscious Goa - Unite. Move. Grow.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        // Initialize theme immediately to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                // Ensure light mode by removing any theme attribute
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Navigation Container -->
+    <div id="nav-container"></div>
+
+    <main>
+        <!-- Hero section - shown when no active events -->
+        <section class="hero" id="heroFallback" style="display:none;">
+            <div class="hero-bg">
+                <video autoplay muted loop playsinline class="hero-video">
+                    <source src="assets/videos/we-are-cult-web.mp4" type="video/mp4">
+                </video>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="hero-layout">
+                    <div class="hero-text-section">
+                        <h1 class="hero-title">
+                            RUN<br>
+                            <span class="title-accent">TOGETHER</span><br>
+                            DREAM BIGGER
+                        </h1>
+                        <p class="hero-description">
+                            Every sunrise brings new miles, every trail tells a story, and every runner finds their pace. Join Goa's most passionate running family where champions are forged.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary" id="startJourneyBtn">
+                                <span>Start Your Journey</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-image-section">
+                        <div class="hero-svg-container">
+                            <svg class="hero-shape" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="sw-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgba(255, 107, 53, 0.93);stop-opacity:1" />
+                                        <stop offset="30%" style="stop-color:rgba(255,107,53,0.8);stop-opacity:1" />
+                                        <stop offset="70%" style="stop-color:rgba(8, 8, 8, 0.171);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(24, 24, 24, 0.1);stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#sw-gradient)"
+                                      d="M21.4,-36.9C27.9,-33.4,33.4,-27.9,37.8,-21.5C42.2,-15,45.5,-7.5,45.4,0C45.4,7.4,41.9,14.8,37.1,20.6C32.4,26.5,26.3,30.8,19.9,35.3C13.5,39.7,6.8,44.2,-0.7,45.4C-8.2,46.7,-16.5,44.8,-22.9,40.3C-29.2,35.9,-33.8,29,-35.9,21.9C-38,14.7,-37.8,7.4,-38.4,-0.4C-39,-8.1,-40.5,-16.2,-37.9,-22.4C-35.2,-28.6,-28.3,-32.9,-21.3,-36.2C-14.3,-39.5,-7.2,-41.8,0.2,-42C7.5,-42.3,14.9,-40.5,21.4,-36.9Z"
+                                      width="100%" height="100%" transform="translate(50 50)"
+                                      stroke-width="0" style="transition: all 0.3s ease;" />
+                            </svg>
+                            <div class="hero-runner-image">
+                                <img src="assets/images/runner.png" alt="Runner" />
+                            </div>
+                        </div>
+                        <div class="floating-stats">
+                            <div class="floating-stat">
+                                <div class="floating-icon"><i class="fas fa-running"></i></div>
+                                <div class="floating-info">
+                                    <span class="floating-number">Daily</span>
+                                    <span class="floating-text">Group Runs</span>
+                                </div>
+                            </div>
+                            <div class="floating-stat">
+                                <div class="floating-icon"><i class="fas fa-medal"></i></div>
+                                <div class="floating-info">
+                                    <span class="floating-number">25+</span>
+                                    <span class="floating-text">Marathons</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-text">Scroll to explore</div>
+                <div class="scroll-arrow"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+          <!-- <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-text">Active Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-text">KMs Covered </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div class="stat-number">25+</div>
+                        <div class="stat-text">Weekly Activities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-text">Events Organized</div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    <!-- Events Hero Banner -->
+    <section class="events-hero-banner" id="home">
+        <div class="ehb-slides" id="ehbSlides">
+            <!-- Loaded dynamically -->
+            <div class="ehb-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        </div>
+
+        <!-- Overlay content -->
+        <div class="ehb-overlay">
+            <div class="container">
+                <div class="ehb-content" id="ehbContent">
+                    <!-- Filled dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <button class="ehb-nav ehb-prev" id="ehbPrev"><i class="fas fa-chevron-left"></i></button>
+        <button class="ehb-nav ehb-next" id="ehbNext"><i class="fas fa-chevron-right"></i></button>
+
+        <!-- Dots -->
+        <div class="ehb-dots" id="ehbDots"></div>
+
+        <!-- Progress bar -->
+        <div class="ehb-progress"><div class="ehb-progress-bar" id="ehbProgressBar"></div></div>
+    </section>
+
+    <!-- Upcoming Adventures section - to be decided later
+    <section class="events-calendar" id="events">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Events</span>
+                    <h2 class="section-title">Upcoming Adventures</h2>
+                    <p class="section-subtitle">Challenge yourself and connect with our fitness community through these exciting events</p>
+                </div>
+                
+                <div class="events-slider-container">
+                    <div class="events-slider" id="eventsSlider">
+                    </div>
+
+                    <div class="slider-navigation">
+                        <button class="nav-btn prev" id="prevBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="slider-dots" id="sliderDots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                            <span class="dot" data-slide="3"></span>
+                        </div>
+                        <button class="nav-btn next" id="nextBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="events-actions">
+                    <a href="events.html" class="btn btn-primary events-view-all">
+                        <span>View All Events</span>
+                        <i class="fas fa-calendar-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    -->
+
+        <!-- <section class="activities" id="activities">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Activities</span>
+                    <h2 class="section-title">What We Offer</h2>
+                    <p class="section-subtitle">Discover diverse fitness experiences tailored for every passion and skill level</p>
+                </div>
+                
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="activity-image-bg" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop');"></div>
+                        <div class="activity-overlay"></div>
+                        <div class="activity-content">
+                            <div class="activity-badge popular">Popular</div>
+                            <div class="activity-icon">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <h3 class="activity-title">Running Groups</h3>
+                            <p class="activity-subtitle">Beach Runs & Trail Adventures</p>
+                            <div class="activity-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">500+</span>
+                                    <span class="stat-label">Runners</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">Daily</span>
+                                    <span class="stat-label">Sessions</span>
+                                </div>
+                            </div>
+                            <button class="activity-btn">
+                                <span>Join Group</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-image-bg" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop');"></div>
+                        <div class="activity-overlay"></div>
+                        <div class="activity-content">
+                            <div class="activity-badge">Weekend</div>
+                            <div class="activity-icon">
+                                <i class="fas fa-bicycle"></i>
+                            </div>
+                            <h3 class="activity-title">Cycling Adventures</h3>
+                            <p class="activity-subtitle">Scenic Routes & Village Paths</p>
+                            <div class="activity-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">200+</span>
+                                    <span class="stat-label">Cyclists</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">15+</span>
+                                    <span class="stat-label">Routes</span>
+                                </div>
+                            </div>
+                            <button class="activity-btn">
+                                <span>Join Ride</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-image-bg" style="background-image: url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&h=600&fit=crop');"></div>
+                        <div class="activity-overlay"></div>
+                        <div class="activity-content">
+                            <div class="activity-badge">Aqua</div>
+                            <div class="activity-icon">
+                                <i class="fas fa-swimmer"></i>
+                            </div>
+                            <h3 class="activity-title">Water Sports</h3>
+                            <p class="activity-subtitle">Swimming & Beach Activities</p>
+                            <div class="activity-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">180+</span>
+                                    <span class="stat-label">Swimmers</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">5+</span>
+                                    <span class="stat-label">Beaches</span>
+                                </div>
+                            </div>
+                            <button class="activity-btn">
+                                <span>Dive In</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section> -->
+        <!-- Benefits section - to be added later
+           <section class="benefits" id="benefits">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Join Us</h2>
+                    <p class="section-subtitle">Experience the power of community-driven fitness</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Supportive<br>Community</h3>
+                            <p>Connect with like-minded fitness enthusiasts who motivate and support each other through every milestone and challenge.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Consistent<br>Schedule</h3>
+                            <p>Regular activities and group sessions help you build sustainable fitness habits and maintain consistency in your health journey.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Friendly<br>Competition</h3>
+                            <p>Participate in healthy competitions that push your limits while celebrating achievements together as a community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        -->
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="section-subtitle">Promoting health, wellness, and an active lifestyle throughout Goa</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Who We Are</h3>
+                        <p>Fitness Conscious Goa is a community of runners and fitness enthusiasts united by a common belief — that fitness has the power to transform lives. Founded on 1st January 2022 as a WhatsApp group, we grew into a movement. In April 2024, we were officially registered as a society under the Government of Goa (Registration No.: 87/2025).</p>
+                        <p>Whether you're just starting your journey or you're a seasoned athlete, Fitness Conscious Goa welcomes everyone to be part of a growing culture that celebrates movement, discipline, and mental well-being.</p>
+                    </div>
+                    <div class="mission-vision">
+                        <div class="mission-card">
+                            <div class="card-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h4>Our Mission</h4>
+                            <p>To inspire every individual in Goa to adopt fitness as a lifelong habit by creating running events, fitness initiatives, and community programs that promote physical and mental well-being.</p>
+                        </div>
+                        <div class="vision-card">
+                            <div class="card-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h4>Our Vision</h4>
+                            <p>To build the largest fitness community in Goa, where every individual, regardless of age or fitness level, embraces an active lifestyle, making Goa one of India's healthiest and fittest states.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Past Activities Section -->
+        <section class="past-activities" id="activities">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Our Journey</span>
+                    <h2 class="section-title">Past Activities</h2>
+                    <p class="section-subtitle">A look back at the events and initiatives that define who we are</p>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-images">
+                        <img src="assets/images/activities/run-for-cooperation-1.jpeg" alt="Run for Cooperation participants at Madkai, Ponda Goa" loading="lazy">
+                        <img src="assets/images/activities/run-for-cooperation-2.jpeg" alt="Run for Cooperation group photo at Madkai" loading="lazy">
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-number">01</div>
+                        <h3>Run for Cooperation – 7km</h3>
+                        <p class="activity-location"><i class="fas fa-map-marker-alt"></i> Madkai, Ponda, Goa</p>
+                        <p>Successfully organized a 7 km run at Madkai in collaboration with Navdurga VKSS Society, Madkai, promoting fitness, community participation, and healthy living.</p>
+                    </div>
+                </div>
+
+                <div class="activity-item activity-item-reverse">
+                    <div class="activity-images">
+                        <img src="assets/images/activities/yarathon-2025-1.jpeg" alt="YARATHON 2025 participants at Farmagudi" loading="lazy">
+                        <img src="assets/images/activities/yarathon-2025-2.jpeg" alt="YARATHON 2025 runners on route" loading="lazy">
+                        <img src="assets/images/activities/yarathon-2025-3.jpeg" alt="YARATHON 2025 finish point gathering" loading="lazy">
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-number">02</div>
+                        <h3>YARATHON 2025 – 7km Run</h3>
+                        <p class="activity-location"><i class="fas fa-map-marker-alt"></i> Farmagudi, Goa</p>
+                        <p>Organized a 7 km run at Farmagudi to celebrate Friendship Day, in collaboration with JCI Farmagudi, encouraging people of all age groups to embrace an active lifestyle.</p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-images activity-images-single">
+                        <img src="assets/images/activities/donation-drive.jpeg" alt="Donation Drive at Matrushaya, Ponda Goa" loading="lazy">
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-number">03</div>
+                        <h3>Donation Drive</h3>
+                        <p class="activity-location"><i class="fas fa-map-marker-alt"></i> Matrushaya, Ponda, Goa</p>
+                        <p>Conducted a donation drive for Matrushaya as part of our commitment to giving back to society. This initiative reflected our belief that a strong community is built not only through fitness but also through compassion and social responsibility.</p>
+                    </div>
+                </div>
+
+                <div class="activity-item activity-item-reverse">
+                    <div class="activity-images">
+                        <img src="assets/images/activities/gita-chanting-1.jpeg" alt="Bhagavad Gita Shloka Chanting Competition - students in auditorium" loading="lazy">
+                        <img src="assets/images/activities/gita-chanting-2.jpeg" alt="Bhagavad Gita Chanting Competition - prize distribution ceremony" loading="lazy">
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-number">04</div>
+                        <h3>Bhagwad Geeta Shlok Chanting Competition</h3>
+                        <p class="activity-location"><i class="fas fa-graduation-cap"></i> For School Students</p>
+                        <p>Organized a Bhagavad Gita Shloka Chanting Competition for school students with the aim of reconnecting young minds with India's rich spiritual heritage. Studies suggest that regular recitation improves concentration, reduces stress, and instils moral values and discipline.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Plans Section -->
+        <section class="future-plans" id="future-plans">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Looking Ahead</span>
+                    <h2 class="section-title">Our Future Plans</h2>
+                    <p class="section-subtitle">Building a healthier, stronger, and fitter Goa — together</p>
+                </div>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-child"></i></div>
+                        <p>Promote sports and physical activities among children from an early age.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-infinity"></i></div>
+                        <p>Encourage every individual to adopt fitness as a lifelong lifestyle rather than a temporary goal.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-running"></i></div>
+                        <p>Organize regular community runs, marathons, and fitness challenges across Goa.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-school"></i></div>
+                        <p>Conduct fitness awareness programs in schools, colleges, and workplaces.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-hands-helping"></i></div>
+                        <p>Build a strong network of volunteers, coaches, and fitness ambassadors.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-handshake"></i></div>
+                        <p>Collaborate with government bodies, educational institutions, NGOs, and corporate organizations to promote public health.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-dumbbell"></i></div>
+                        <p>Introduce fitness workshops, running clinics, and wellness seminars led by experienced athletes and fitness professionals.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-award"></i></div>
+                        <p>Recognize and encourage outstanding athletes, volunteers, and individuals who contribute towards building a healthier Goa.</p>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-icon"><i class="fas fa-leaf"></i></div>
+                        <p>Promote environmental responsibility by organizing eco-friendly fitness events and awareness campaigns.</p>
+                    </div>
+                </div>
+
+                <div class="commitment-block">
+                    <p>At Fitness Conscious Goa, we believe that fitness is more than exercise — it is a way of life. Our mission is to inspire people to move more, live healthier, and support one another in achieving their fitness goals. Together with our members, volunteers, and supporters, we are committed to creating a healthier, stronger, and more active Goa for present and future generations.</p>
+                    <h3>"Together, We Can Build a Healthier, Stronger, and Fitter Goa."</h3>
+                </div>
+            </div>
+        </section>
+
+    
+        <!-- <section class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What Our Members Say</h2>
+                    <p class="section-subtitle">Real stories from our fitness community</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Fitness Conscious Goa has transformed my life! The community support is incredible, and I've never been more motivated to stay active."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=60&h=60&fit=crop&crop=faces" alt="Anjali Verma">
+                            <div>
+                                <h4>Anjali Verma</h4>
+                                <p>Running Enthusiast</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"The cycling groups are amazing! I've explored so many beautiful parts of Goa while getting fit. Best decision ever!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=faces" alt="Vikram Singh">
+                            <div>
+                                <h4>Vikram Singh</h4>
+                                <p>Cycling Expert</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"From a complete beginner to swimming confidently in the ocean. The coaches here are patient and encouraging!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=faces" alt="Priya Nair">
+                            <div>
+                                <h4>Priya Nair</h4>
+                                <p>Swimming Beginner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Newsletter section - to be added later
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <h2>Stay Updated</h2>
+                        <p>Get the latest updates on events, activities, and community news delivered to your inbox.</p>
+                    </div>
+                    <div class="newsletter-form">
+                        <form class="subscribe-form">
+                            <input type="email" placeholder="Enter your email address" required>
+                            <button type="submit" class="btn btn-primary">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        -->
+
+        <!-- CTA section - to be added later
+        <section class="cta" id="join">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Join the Movement?</h2>
+                    <p>Be part of Goa's most inspiring fitness community. Whether you're a beginner or seasoned athlete, we welcome you to grow stronger with us — physically, mentally, and socially.</p>
+                    <div class="cta-actions">
+                        <button class="btn btn-primary">
+                            <span>Join Our Community</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="social-proof">
+                            <div class="social-avatars">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=40&h=40&fit=crop&crop=faces" alt="Member">
+                                <img src="https://images.unsplash.com/photo-1594736797933-d0a2fdbd5b5b?w=40&h=40&fit=crop&crop=faces" alt="Member">
+                                <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=40&h=40&fit=crop&crop=faces" alt="Member">
+                                <span class="more-count">+497</span>
+                            </div>
+                            <p>Join 500+ passionate Goans in our community</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        -->
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-brand">
+                        <span class="brand-text">FITNESS<span class="brand-accent"> CONSCIOUS</span> GOA</span>
+                    </a>
+                    <p>Goa's community-driven movement promoting health, wellness, and an active lifestyle for all ages.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/fitnessconsciousgoa/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/people/Fitness-Conscious-Goa/61579370969202/#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Quick Links</h4>
+                        <a href="index.html#about">About Us</a>
+                        <a href="events.html">Events</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Contact Us</h4>
+                        <a href="tel:+917507014838"><i class="fas fa-phone"></i>+91 75070 14838</a>
+                        <a href="mailto:fitnessconsciousgoa@gmail.com"><i class="fas fa-envelope"></i>fitnessconsciousgoa@gmail.com</a>
+                        <a href="#"><i class="fas fa-map-marker-alt"></i>Ponda, Goa</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fitness Conscious Goa. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="src/nav-simple.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

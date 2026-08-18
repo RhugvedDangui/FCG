@@ -1,0 +1,81 @@
+# =========================================
+# Environment & Secrets
+# =========================================
+.env
+*.env.local
+
+# =========================================
+# Composer dependencies
+# =========================================
+/vendor/
+composer.lock
+
+# =========================================
+# User uploaded files (don't overwrite on deploy)
+# =========================================
+/uploads/
+
+# =========================================
+# Database exports & SQL dumps
+# =========================================
+*.sql
+!database/create_*.sql
+!database/update_*.sql
+!database/add_*.sql
+
+# =========================================
+# PDF & extracted assets
+# =========================================
+/pdf_extracted/
+FCG.pdf
+
+# =========================================
+# Development & test files
+# =========================================
+test-mail.php
+test-*.php
+debug-*.php
+
+# =========================================
+# Editor & OS files
+# =========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =========================================
+# Logs
+# =========================================
+*.log
+/logs/
+
+# =========================================
+# Temporary files
+# =========================================
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# =========================================
+# Node (if ever used)
+# =========================================
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# =========================================
+# Markdown docs (optional — remove if you want these tracked)
+# =========================================
+CONTEXT.md
+WEBHOOK-FIXES.md
+GMAIL-SETUP.md
+ENV-SETUP.md
+SETUP.md

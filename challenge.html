@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Challenges - FitFlow</title>
+    <meta name="description" content="Join exclusive fitness challenges designed for elite athletes. Connect your Strava account and compete for substantial prizes.">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+</head>
+<body data-theme="dark">
+    <!-- Theme initialization script -->
+    <script>
+        const savedTheme = localStorage.getItem('fitflow-theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <div class="logo-text">FitFlow</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navigation Container -->
+    <div id="nav-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-gradient"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">🏃‍♂️</span>
+                    <span class="badge-text">Premium Challenges</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="title-word">Elite</span>
+                    <span class="title-word gradient-text">Fitness</span>
+                    <span class="title-word">Challenges</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Push your limits with our exclusive challenges designed for serious athletes. 
+                    Connect your Strava account and compete for substantial prizes in professionally organized events.
+                </p>
+                
+                <div class="hero-actions">
+                    <button class="btn-primary">
+                        <i class="fab fa-strava"></i>
+                        <span>View Active Challenges</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges Grid -->
+    <section class="challenges-section section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Active Challenges</span>
+                </div>
+                <h2 class="section-title">
+                    <span class="title-main">Current</span>
+                    <span class="title-highlight">Challenges</span>
+                </h2>
+            </div>
+
+            <div class="challenges-grid">
+                <div class="challenge-card featured">
+                    <div class="challenge-image">
+                        <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop" alt="October Running Challenge">
+                        <div class="challenge-overlay">
+                            <div class="challenge-badge">Featured</div>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <div class="challenge-meta">
+                            <span class="challenge-type running">Running</span>
+                            <span class="challenge-prize">₹1,00,000</span>
+                        </div>
+                        <h3>October Distance Challenge</h3>
+                        <p>Run 200km in October and win amazing prizes. Track your progress and compete with athletes worldwide.</p>
+                        <div class="challenge-stats">
+                            <div class="stat">
+                                <span class="stat-value">2,347</span>
+                                <span class="stat-label">Participants</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Days Left</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">Join Challenge</button>
+                    </div>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" alt="Speed Challenge">
+                        <div class="challenge-overlay">
+                            <div class="challenge-difficulty">Advanced</div>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <div class="challenge-meta">
+                            <span class="challenge-type speed">Speed</span>
+                            <span class="challenge-prize">₹50,000</span>
+                        </div>
+                        <h3>5K Speed Challenge</h3>
+                        <p>Achieve your fastest 5K time this month. Professional timing and instant leaderboard updates.</p>
+                        <div class="challenge-stats">
+                            <div class="stat">
+                                <span class="stat-value">1,089</span>
+                                <span class="stat-label">Participants</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">22</span>
+                                <span class="stat-label">Days Left</span>
+                            </div>
+                        </div>
+                        <button class="btn-secondary">Join Challenge</button>
+                    </div>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-image">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0a2fdbd5b5b?w=600&h=400&fit=crop" alt="Trail Challenge">
+                        <div class="challenge-overlay">
+                            <div class="challenge-difficulty">Expert</div>
+                        </div>
+                    </div>
+                    <div class="challenge-content">
+                        <div class="challenge-meta">
+                            <span class="challenge-type trail">Trail</span>
+                            <span class="challenge-prize">₹75,000</span>
+                        </div>
+                        <h3>Mountain Trail Quest</h3>
+                        <p>Conquer challenging mountain trails with elevation gains. GPS verified routes and professional support.</p>
+                        <div class="challenge-stats">
+                            <div class="stat">
+                                <span class="stat-value">456</span>
+                                <span class="stat-label">Participants</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-label">Days Left</span>
+                            </div>
+                        </div>
+                        <button class="btn-secondary">Join Challenge</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer -->
+    <footer class="footer">
+        <div class="footer-bg">
+            <div class="footer-pattern"></div>
+        </div>
+        
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <span class="footer-logo-text">FitFlow</span>
+                    </div>
+                    <p class="footer-description">
+                        India's premier fitness racing platform connecting elite athletes 
+                        through seamless Strava integration and exclusive events.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2025 FitFlow. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Navigation Loader -->
+    <script src="src/nav-simple.js"></script>
+</body>
+</html>
+
