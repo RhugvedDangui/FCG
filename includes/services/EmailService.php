@@ -42,6 +42,105 @@ class EmailService {
         return $this->sendEmail($userEmail, $subject, $htmlBody, $textBody);
     }
 
+    /**
+     * Send admin notification with full registration details
+     */
+    public function sendAdminNotification($regData, $eventData, $paymentData = null) {
+        $adminEmail = 'fitnessconsciousgoa@gmail.com';
+        $eventTitle = $eventData['title'] ?? 'Event';
+        $subject    = "New Registration - {$eventTitle}";
+
+        $rows = '';
+        $fields = [
+            'Registration ID'        => $regData['id'] ?? '',
+            'Event'                  => $eventTitle,
+            'Name'                   => ($regData['first_name'] ?? '') . ' ' . ($regData['last_name'] ?? ''),
+            'Email'                  => $regData['email'] ?? '',
+            'Mobile'                 => $regData['mobile_number'] ?? '',
+            'Age'                    => $regData['age'] ?? '',
+            'Gender'                 => ucfirst($regData['gender'] ?? ''),
+            'Date of Birth'          => $regData['date_of_birth'] ?? '',
+            'Address'                => $regData['address'] ?? '',
+            'T-Shirt Size'           => $regData['tshirt_size'] ?? '',
+            'Runner Group'           => $regData['runner_group'] ?? '',
+            'Emergency Contact'      => ($regData['emergency_contact_name'] ?? '') . ' — ' . ($regData['emergency_contact_mobile'] ?? ''),
+            'Registration Type'      => ucfirst($regData['registration_type'] ?? ''),
+            'Payment Status'         => $regData['ispaid'] ? 'Paid' : 'Unpaid',
+            'Order ID'               => $regData['order_id'] ?? '',
+            'Registered On'          => !empty($regData['created_at']) ? date('d M Y H:i', strtotime($regData['created_at'])) : '',
+        ];
+
+        if ($paymentData) {
+            $fields['Payment ID']     = $paymentData['payment_id'] ?? '';
+            $fields['Amount Paid']    = 'Rs.' . ($paymentData['amount'] ?? '');
+            $fields['Payment Method'] = $paymentData['method'] ?? '';
+        }
+
+        foreach ($fields as $label => $value) {
+            if ($value === '' || $value === ' — ') continue;
+            $rows .= "<tr>
+                <td style='padding:7px 12px;color:#888;font-size:13px;width:160px;border-bottom:1px solid #f0f0f0;'>{$label}</td>
+                <td style='padding:7px 12px;color:#222;font-size:13px;border-bottom:1px solid #f0f0f0;'>" . htmlspecialchars((string)$value) . "</td>
+            </tr>";
+        }
+
+        $fromName = htmlspecialchars($this->fromName);
+        $html = "<!DOCTYPE html><html><head><meta charset='UTF-8'></head>
+<body style='font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px;'>
+<table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center'>
+<table style='max-width:560px;width:100%;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.08);'>
+  <tr><td style='background:linear-gradient(135deg,#FF4444,#FF6B35);padding:24px;text-align:center;'>
+    <h2 style='margin:0;color:#fff;font-size:18px;'>New Registration Alert</h2>
+    <p style='margin:6px 0 0;color:rgba(255,255,255,.88);font-size:13px;'>{$eventTitle}</p>
+  </td></tr>
+  <tr><td style='padding:0;'>
+    <table width='100%' cellpadding='0' cellspacing='0'>{$rows}</table>
+  </td></tr>
+  <tr><td style='background:#f8f8f8;padding:14px 20px;text-align:center;border-top:1px solid #eee;'>
+    <p style='margin:0;font-size:11px;color:#999;'>Automated admin notification &mdash; {$fromName}</p>
+  </td></tr>
+</table></td></tr></table>
+</body></html>";
+
+        return $this->sendEmailDirect($adminEmail, $subject, $html);
+    }
+
+    /**
+     * Send email directly without CC (for admin notifications)
+     */
+    private function sendEmailDirect($to, $subject, $htmlBody) {
+        try {
+            if (!filter_var($to, FILTER_VALIDATE_EMAIL)) return false;
+
+            require_once __DIR__ . '/../../vendor/autoload.php';
+
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host     = $this->smtpHost;
+            $mail->SMTPAuth = true;
+            $mail->Username = $this->smtpUsername;
+            $mail->Password = $this->smtpPassword;
+            $mail->Port     = (int)$this->smtpPort;
+
+            if (strtolower($this->smtpEncryption) === 'ssl') {
+                $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+            } else {
+                $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+            }
+
+            $mail->setFrom($this->fromAddress, $this->fromName);
+            $mail->addAddress($to);
+            $mail->Subject = $subject;
+            $mail->isHTML(true);
+            $mail->Body    = $htmlBody;
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            error_log("Admin notification failed: " . $e->getMessage());
+            return false;
+        }
+    }
+
     private function sendEmail($to, $subject, $htmlBody, $textBody = null) {
         try {
             if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
@@ -66,6 +165,7 @@ class EmailService {
 
             $mail->setFrom($this->fromAddress, $this->fromName);
             $mail->addAddress($to);
+            $mail->addCC('fitnessconsciousgoa@gmail.com', 'Fitness Conscious Goa');
             $mail->Subject = $subject;
             $mail->isHTML(true);
             $mail->Body    = $htmlBody;

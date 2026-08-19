@@ -79,6 +79,9 @@ class WebhookEmailHandler {
                 $eventData, 
                 $paymentInfo
             );
+
+            // Send admin notification with full registration details
+            $this->emailService->sendAdminNotification($registrationData, $eventData, $paymentInfo);
             
             // Log email status
             $this->logEmailStatus($orderId, $confirmationSent, $receiptSent);

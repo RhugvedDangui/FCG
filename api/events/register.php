@@ -144,6 +144,28 @@ try {
         ];
         $emailEventData = $evRow ?: ['title' => $event['title'], 'date' => date('Y-m-d'), 'location' => ''];
         $emailService->sendRegistrationConfirmation($userData['email'], $emailUserData, $emailEventData);
+
+        // Send admin notification with full details
+        $fullRegData = [
+            'id'                      => $registrationId,
+            'first_name'              => $userData['firstName'],
+            'last_name'               => $userData['lastName'],
+            'email'                   => $userData['email'],
+            'mobile_number'           => $userData['mobileNumber'],
+            'age'                     => $age,
+            'gender'                  => $userData['gender'],
+            'date_of_birth'           => $userData['dateOfBirth'],
+            'address'                 => $userData['address'],
+            'tshirt_size'             => $userData['tshirtSize'],
+            'runner_group'            => $userData['runnerGroup'],
+            'emergency_contact_name'  => $userData['emergencyContactName'],
+            'emergency_contact_mobile'=> $userData['emergencyContactMobile'],
+            'registration_type'       => 'free',
+            'ispaid'                  => 1,
+            'order_id'                => null,
+            'created_at'              => date('Y-m-d H:i:s')
+        ];
+        $emailService->sendAdminNotification($fullRegData, $emailEventData);
     } catch (Exception $mailEx) {
         error_log("Free registration email failed (registration saved): " . $mailEx->getMessage());
     }

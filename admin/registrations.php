@@ -58,17 +58,52 @@ function paymentBadge(array $r): string {
 
 // CSV Export
 if (isset($_GET['export']) && $_GET['export'] === 'csv') {
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="registrations_' . date('Ymd') . '.csv"');
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="registrations_' . date('Ymd_His') . '.csv"');
+    // BOM for Excel UTF-8 compatibility
+    echo "\xEF\xBB\xBF";
     $out = fopen('php://output', 'w');
-    fputcsv($out, ['ID','Event','Name','Email','Mobile','Age','Gender','T-Shirt','Payment','ID Proof','Registered On']);
+    fputcsv($out, [
+        'ID', 'Event', 'Registration Type', 'Payment Status',
+        'First Name', 'Last Name', 'Full Name', 'Email', 'Mobile',
+        'Age', 'Gender', 'Date of Birth', 'Address',
+        'T-Shirt Size', 'Runner Group',
+        'Emergency Contact Name', 'Emergency Contact Mobile',
+        'Order ID', 'ID Proof',
+        'Registered On'
+    ]);
     foreach ($regs as $r) {
+        // Determine payment status label
+        $type    = $r['registration_type'] ?? 'free';
+        $ispaid  = $r['ispaid'] ?? 0;
+        $pstatus = $r['payment_status'] ?? null;
+        if ($type === 'free')       $payLabel = 'Free';
+        elseif ($ispaid)            $payLabel = 'Paid';
+        elseif ($pstatus === 'created') $payLabel = 'Pending';
+        elseif ($pstatus === 'failed')  $payLabel = 'Failed';
+        else                        $payLabel = 'Unpaid';
+
         fputcsv($out, [
-            $r['id'], $r['event_title'], $r['full_name'], $r['email'],
-            $r['mobile_number'], $r['age'], $r['gender'], $r['tshirt_size'],
-            $r['ispaid'] ? 'Paid' : 'Unpaid',
+            $r['id'],
+            $r['event_title'] ?? '',
+            ucfirst($type),
+            $payLabel,
+            $r['first_name'] ?? '',
+            $r['last_name'] ?? '',
+            $r['full_name'] ?? '',
+            $r['email'] ?? '',
+            $r['mobile_number'] ?? '',
+            $r['age'] ?? '',
+            ucfirst($r['gender'] ?? ''),
+            $r['date_of_birth'] ?? '',
+            $r['address'] ?? '',
+            $r['tshirt_size'] ?? '',
+            $r['runner_group'] ?? '',
+            $r['emergency_contact_name'] ?? '',
+            $r['emergency_contact_mobile'] ?? '',
+            $r['order_id'] ?? '',
             $r['id_proof'] ? 'Yes' : 'No',
-            date('d M Y H:i', strtotime($r['created_at']))
+            $r['created_at'] ? date('d M Y H:i', strtotime($r['created_at'])) : ''
         ]);
     }
     fclose($out);
