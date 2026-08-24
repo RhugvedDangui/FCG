@@ -220,12 +220,9 @@ class EventRegistration {
         if (existing) existing.remove();
         if (!extraInfo || !extraInfo.length) return;
 
-        const form = document.getElementById('registrationForm');
-        const firstSection = form.querySelector('.form-section');
-
         const div = document.createElement('div');
         div.id = 'extraInfoSection';
-        div.style.cssText = 'margin-bottom:1.5rem;';
+        div.style.cssText = 'margin-bottom:1rem;';
 
         div.innerHTML = extraInfo.map(block => `
             <div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.75rem;">
@@ -237,7 +234,16 @@ class EventRegistration {
             </div>
         `).join('');
 
-        form.insertBefore(div, firstSection);
+        // Insert above the event info section (title/date/price bar)
+        const eventInfoSection = document.querySelector('.event-info-section');
+        if (eventInfoSection) {
+            eventInfoSection.parentNode.insertBefore(div, eventInfoSection);
+        } else {
+            // fallback — insert before form
+            const form = document.getElementById('registrationForm');
+            const firstSection = form.querySelector('.form-section');
+            form.insertBefore(div, firstSection);
+        }
     }
 
     renderCustomFields(fields) {
