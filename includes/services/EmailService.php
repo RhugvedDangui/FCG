@@ -128,6 +128,14 @@ class EmailService {
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             }
 
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true,
+                ]
+            ];
+
             $mail->setFrom($this->fromAddress, $this->fromName);
             $mail->addAddress($to);
             $mail->Subject = $subject;
@@ -162,6 +170,14 @@ class EmailService {
             } else {
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             }
+
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true,
+                ]
+            ];
 
             $mail->setFrom($this->fromAddress, $this->fromName);
             $mail->addAddress($to);
