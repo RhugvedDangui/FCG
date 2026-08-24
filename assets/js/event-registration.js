@@ -159,12 +159,35 @@ class EventRegistration {
         const locEl = document.getElementById('eventLocation');
         if (locEl) locEl.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${event.location || 'Goa'}`;
 
-        // Render event_details HTML directly
+        // Render event_details — extract text, display with site theme
         const detailsBlock = document.getElementById('eventDetailsBlock');
         const detailsContent = document.getElementById('eventDetailsContent');
         if (detailsContent && event.event_details) {
-            detailsContent.innerHTML = event.event_details;
-            if (detailsBlock) detailsBlock.style.display = 'block';
+            const tmp = document.createElement('div');
+            tmp.innerHTML = event.event_details;
+
+            // Remove style tags
+            tmp.querySelectorAll('style, script').forEach(el => el.remove());
+
+            let html = '';
+            // Walk all elements, pick meaningful text
+            tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li').forEach(el => {
+                const tag = el.tagName.toLowerCase();
+                const text = el.textContent.trim();
+                if (!text) return;
+                if (['h1','h2','h3','h4','h5','h6'].includes(tag)) {
+                    html += `<p style="font-weight:700;font-size:0.8rem;color:var(--text-primary);margin:0.6rem 0 0.2rem;text-transform:uppercase;letter-spacing:0.06em;">${text}</p>`;
+                } else if (tag === 'li') {
+                    html += `<p style="font-size:0.82rem;color:var(--text-secondary);margin:0.15rem 0 0.15rem 0.75rem;"><span style="color:#FF6B35;margin-right:6px;">•</span>${text}</p>`;
+                } else {
+                    html += `<p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0.1rem 0;">${text}</p>`;
+                }
+            });
+
+            if (html) {
+                detailsContent.innerHTML = `<div style="border:1px solid rgba(255,107,53,0.15);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1rem;">${html}</div>`;
+                if (detailsBlock) detailsBlock.style.display = 'block';
+            }
         }
         
         // Update price and payment section
