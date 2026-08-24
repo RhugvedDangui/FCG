@@ -2,4 +2,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/brxl4y73pwst/public_html
-    - /bin/cp -R . $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH/
+    - /bin/cp -R .htaccess $DEPLOYPATH/ 2>/dev/null || true
