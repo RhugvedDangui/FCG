@@ -2,5 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/brxl4y73pwst/public_html
-    - /bin/cp -Rf * $DEPLOYPATH/
-    - /bin/cp -f .htaccess $DEPLOYPATH/ 2>/dev/null || true
+    - rsync -av --exclude='.git' --exclude='.env' --exclude='vendor' . $DEPLOYPATH/
