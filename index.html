@@ -28,7 +28,8 @@
     <meta name="twitter:image" content="https://fitnessconsciousgoa.in/assets/images/runner.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/jpeg" href="favicon/favicon.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="favicon/favicon.jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -159,31 +160,25 @@
     <!-- Events Hero Banner -->
     <section class="events-hero-banner" id="home">
         <div class="ehb-slides" id="ehbSlides">
-            <!-- Loaded dynamically -->
-            <div class="ehb-loading">
-                <i class="fas fa-spinner fa-spin"></i>
-            </div>
+            <div class="ehb-loading"><i class="fas fa-spinner fa-spin"></i></div>
         </div>
-
-        <!-- Overlay content -->
         <div class="ehb-overlay">
             <div class="container">
-                <div class="ehb-content" id="ehbContent">
-                    <!-- Filled dynamically -->
-                </div>
+                <div class="ehb-content" id="ehbContent"></div>
             </div>
         </div>
-
-        <!-- Navigation -->
         <button class="ehb-nav ehb-prev" id="ehbPrev"><i class="fas fa-chevron-left"></i></button>
         <button class="ehb-nav ehb-next" id="ehbNext"><i class="fas fa-chevron-right"></i></button>
-
-        <!-- Dots -->
         <div class="ehb-dots" id="ehbDots"></div>
-
-        <!-- Progress bar -->
         <div class="ehb-progress"><div class="ehb-progress-bar" id="ehbProgressBar"></div></div>
     </section>
+
+    <!-- Event Details Panel — shown below banner when an event has detailed HTML -->
+    <div class="event-details-panel" id="eventDetailsPanel" style="display:none;">
+        <div class="container">
+            <div class="event-details-panel-inner" id="eventDetailsPanelContent"></div>
+        </div>
+    </div>
 
     <!-- Upcoming Adventures section - to be decided later
     <section class="events-calendar" id="events">
@@ -366,7 +361,7 @@
                 <div class="about-content">
                     <div class="about-text">
                         <h3>Who We Are</h3>
-                        <p>Fitness Conscious Goa is a community of runners and fitness enthusiasts united by a common belief — that fitness has the power to transform lives. Founded on 1st January 2022 as a WhatsApp group, we grew into a movement. In April 2024, we were officially registered as a society under the Government of Goa (Registration No.: 87/2025).</p>
+                        <p>Fitness Conscious Goa is a community of runners and fitness enthusiasts united by a common belief — that fitness has the power to transform lives. Founded on 1st January 2022 as a WhatsApp group, we grew into a movement. In April 2024, we were officially registered as a society under the Government of Goa.</p>
                         <p>Whether you're just starting your journey or you're a seasoned athlete, Fitness Conscious Goa welcomes everyone to be part of a growing culture that celebrates movement, discipline, and mental well-being.</p>
                     </div>
                     <div class="mission-vision">
@@ -635,8 +630,8 @@
                     <div class="social-links">
                         <a href="https://www.instagram.com/fitnessconsciousgoa/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.facebook.com/people/Fitness-Conscious-Goa/61579370969202/#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <!-- <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a> -->
                     </div>
                 </div>
                 <div class="footer-links">

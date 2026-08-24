@@ -1180,16 +1180,24 @@ async function initBannerCarousel() {
         </div>
       </div>` : '';
 
+    const extraInfoHtml = (ev.extra_info && ev.extra_info.length) ? ev.extra_info.map(block => `
+      <div class="ehb-meta-item ehb-extra-row">
+        <i class="fas fa-circle-info"></i>
+        <span><strong>${block.label || ''}:</strong> ${block.content || ''}</span>
+      </div>`).join('') : '';
+
+    const eventDetailsHtml = ev.event_details ? `
+      <div class="ehb-event-details">${ev.event_details}</div>` : '';
+
     contentEl.innerHTML = `
-      <div class="ehb-type-badge">
-        <i class="fas ${t.icon}"></i> ${t.label}
-      </div>
       <h2 class="ehb-title">${ev.title}</h2>
       <div class="ehb-meta">
         <div class="ehb-meta-item"><i class="fas fa-calendar-alt"></i> ${ev.formatted_date || ev.date}</div>
         <div class="ehb-meta-item"><i class="fas fa-clock"></i> ${ev.formatted_time || ev.start_time}</div>
         <div class="ehb-meta-item"><i class="fas fa-map-marker-alt"></i> ${ev.location || 'Goa'}</div>
+        ${extraInfoHtml}
       </div>
+      ${eventDetailsHtml}
       ${contactHtml}
       <div class="ehb-actions">
         ${priceHtml}
@@ -1201,7 +1209,7 @@ async function initBannerCarousel() {
 
     // Animate content in
     requestAnimationFrame(() => {
-      contentEl.querySelectorAll('.ehb-type-badge, .ehb-title, .ehb-meta, .ehb-contact, .ehb-actions').forEach(el => {
+      contentEl.querySelectorAll('.ehb-title, .ehb-meta, .ehb-extra-info, .ehb-event-details, .ehb-contact, .ehb-actions').forEach(el => {
         el.classList.add('visible');
       });
     });
@@ -1216,7 +1224,7 @@ async function initBannerCarousel() {
     const dotEls   = dotsEl.querySelectorAll('.ehb-dot');
 
     // Fade out content
-    contentEl.querySelectorAll('.ehb-type-badge, .ehb-title, .ehb-meta, .ehb-contact, .ehb-actions').forEach(el => {
+    contentEl.querySelectorAll('.ehb-title, .ehb-meta, .ehb-extra-info, .ehb-event-details, .ehb-contact, .ehb-actions').forEach(el => {
       el.classList.remove('visible');
     });
 

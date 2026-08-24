@@ -2,6 +2,11 @@
 
 /* Events Grid Layout */
 .events-grid {
+    padding: 2rem 0;
+    background: var(--background-color);
+}
+
+.events-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;

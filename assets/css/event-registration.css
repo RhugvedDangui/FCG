@@ -365,6 +365,23 @@ input[type="button"] {
     line-height: 1.4;
 }
 
+/* Red asterisk for required fields */
+.form-group label .req,
+.form-group label::after {
+    color: #FF4444;
+}
+
+/* Target labels that end with * */
+.registration-form .form-group label:has(+ [required]),
+.registration-form .form-group label[for] {
+    /* base style */
+}
+
+/* Simple approach — style all * in labels red */
+.form-group label {
+    /* handled via JS below */
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {

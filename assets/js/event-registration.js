@@ -38,6 +38,17 @@ class EventRegistration {
         }
 
         await this.loadEventData();
+
+        // Make all asterisks in labels red
+        this.styleRequiredAsterisks();
+    }
+
+    styleRequiredAsterisks() {
+        document.querySelectorAll('.form-group label').forEach(label => {
+            if (label.innerHTML.includes('*') && !label.querySelector('.req-star')) {
+                label.innerHTML = label.innerHTML.replace(/\s?\*(\s?)$/, ' <span class="req-star" style="color:#FF4444;">*</span>$1');
+            }
+        });
     }
 
     async loadEventData() {
@@ -121,6 +132,8 @@ class EventRegistration {
         this.loadingState.style.display = 'none';
         this.errorState.style.display = 'none';
         this.formContainer.style.display = 'block';
+        // Style required asterisks red after form is visible
+        setTimeout(() => this.styleRequiredAsterisks(), 50);
     }
 
     updateEventInfo(event) {
@@ -149,22 +162,111 @@ class EventRegistration {
         const totalAmount = document.getElementById('totalAmount');
         
         if (event.price && event.price > 0) {
-            // Paid event
             priceElement.textContent = `₹${event.price}`;
             priceElement.classList.remove('free-event');
-            
-            // Show payment section
             paymentSection.style.display = 'block';
             paymentAmount.textContent = `₹${event.price}`;
             totalAmount.textContent = `₹${event.price}`;
         } else {
-            // Free event
             priceElement.textContent = 'FREE';
             priceElement.classList.add('free-event');
-            
-            // Hide payment section
             paymentSection.style.display = 'none';
         }
+
+        // Render custom fields if any
+        this.renderCustomFields(event.custom_fields || []);
+
+        // Show extra info if available
+        this.renderExtraInfo(event.extra_info || []);
+    }
+
+    renderExtraInfo(extraInfo) {
+        const existing = document.getElementById('extraInfoSection');
+        if (existing) existing.remove();
+        if (!extraInfo || !extraInfo.length) return;
+
+        const form = document.getElementById('registrationForm');
+        const firstSection = form.querySelector('.form-section');
+
+        const div = document.createElement('div');
+        div.id = 'extraInfoSection';
+        div.style.cssText = 'margin-bottom:1.5rem;';
+
+        div.innerHTML = extraInfo.map(block => `
+            <div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.75rem;">
+                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">
+                    <i class="fas fa-info-circle" style="color:#FF6B35;font-size:0.85rem;"></i>
+                    <strong style="font-size:0.85rem;color:var(--text-primary);">${block.label || ''}</strong>
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;white-space:pre-line;">${block.content || ''}</div>
+            </div>
+        `).join('');
+
+        form.insertBefore(div, firstSection);
+    }
+
+    renderCustomFields(fields) {
+        // Remove existing custom fields section if any
+        const existing = document.getElementById('customFieldsSection');
+        if (existing) existing.remove();
+
+        if (!fields || fields.length === 0) return;
+
+        const form = document.getElementById('registrationForm');
+        const submitSection = form.querySelector('.form-section:last-child');
+
+        const section = document.createElement('div');
+        section.className = 'form-section';
+        section.id = 'customFieldsSection';
+        section.innerHTML = `
+            <h3 class="section-title">
+                <i class="fas fa-sliders-h"></i>
+                Additional Information
+            </h3>
+            <div class="form-grid" id="customFieldsGrid"></div>
+        `;
+
+        form.insertBefore(section, submitSection);
+
+        const grid = section.querySelector('#customFieldsGrid');
+
+        fields.forEach((field, idx) => {
+            const fieldId = `custom_field_${idx}`;
+            const required = field.required ? 'required' : '';
+            const reqMark  = field.required ? ' <span class="req-star" style="color:#FF4444;">*</span>' : '';
+            let inputHtml  = '';
+
+            if (field.type === 'select' && field.options && field.options.length) {
+                const opts = field.options.map(o => `<option value="${o}">${o}</option>`).join('');
+                inputHtml = `<select id="${fieldId}" name="custom_${idx}" ${required}>
+                    <option value="">Select ${field.label}</option>
+                    ${opts}
+                </select>`;
+            } else if (field.type === 'checkbox') {
+                inputHtml = `<label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding-top:0.5rem;">
+                    <input type="checkbox" id="${fieldId}" name="custom_${idx}" value="Yes" ${required}>
+                    <span>${field.label}</span>
+                </label>`;
+            } else {
+                const inputType = field.type === 'number' ? 'number' : 'text';
+                inputHtml = `<input type="${inputType}" id="${fieldId}" name="custom_${idx}" 
+                    placeholder="${field.label}" ${required}>`;
+            }
+
+            const div = document.createElement('div');
+            div.className = 'form-group';
+            div.dataset.fieldLabel = field.label;
+            div.dataset.fieldIdx = idx;
+            if (field.type !== 'checkbox') {
+                div.innerHTML = `<label for="${fieldId}">${field.label}${reqMark}</label>${inputHtml}`;
+            } else {
+                div.innerHTML = inputHtml;
+            }
+            grid.appendChild(div);
+        });
+
+        // Re-run asterisk styling for new fields
+        this.styleRequiredAsterisks();
     }
 
     async handleFormSubmission(formData) {
@@ -278,6 +380,9 @@ class EventRegistration {
             orderFormData.append('request_id', this.generateRequestId());
             orderFormData.append('client_info', JSON.stringify(this.getClientInfo()));
 
+            // Append custom field answers
+            this.appendCustomFields(orderFormData);
+
             const response = await fetch('api/payments/create-order.php', {
                 method: 'POST',
                 body: orderFormData // Send as FormData to support file uploads
@@ -358,14 +463,14 @@ class EventRegistration {
     }
 
     async submitRegistration(formData) {
-        // This method is now only used for FREE events
-        // Paid events go through createOrder -> payment -> webhook flow
-        
         // Add event information
         formData.append('event_id', this.currentEvent.event_id || this.currentEvent.id);
         formData.append('event_title', this.currentEvent.title);
         formData.append('event_price', this.currentEvent.price || 0);
         formData.append('registration_type', 'free');
+
+        // Append custom field answers
+        this.appendCustomFields(formData);
         
         const response = await fetch('api/events/register.php', {
             method: 'POST',
@@ -375,12 +480,31 @@ class EventRegistration {
         const result = await response.json();
         
         if (result.success) {
-            // Redirect to thank you page
             const eventId = this.currentEvent.event_id || this.currentEvent.id;
             window.location.href = `registration-success.html?event=${eventId}&reg_id=${result.registration_id}`;
         } else {
             throw new Error(result.message || 'Registration failed');
         }
+    }
+
+    appendCustomFields(formData) {
+        const fields = this.currentEvent.custom_fields || [];
+        if (!fields.length) return;
+
+        const answers = [];
+        fields.forEach((field, idx) => {
+            const el = document.querySelector(`[name="custom_${idx}"]`);
+            if (!el) return;
+            let value = '';
+            if (el.type === 'checkbox') {
+                value = el.checked ? 'Yes' : 'No';
+            } else {
+                value = el.value || '';
+            }
+            answers.push({ label: field.label, value: value });
+        });
+
+        formData.append('custom_field_answers', JSON.stringify(answers));
     }
 
     validateForm() {

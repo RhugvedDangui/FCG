@@ -65,7 +65,7 @@ class EmailService {
             'Runner Group'           => $regData['runner_group'] ?? '',
             'Emergency Contact'      => ($regData['emergency_contact_name'] ?? '') . ' — ' . ($regData['emergency_contact_mobile'] ?? ''),
             'Registration Type'      => ucfirst($regData['registration_type'] ?? ''),
-            'Payment Status'         => $regData['ispaid'] ? 'Paid' : 'Unpaid',
+            'Payment Status'         => isset($regData['ispaid']) && $regData['ispaid'] ? 'Paid' : 'Unpaid',
             'Order ID'               => $regData['order_id'] ?? '',
             'Registered On'          => !empty($regData['created_at']) ? date('d M Y H:i', strtotime($regData['created_at'])) : '',
         ];

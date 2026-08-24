@@ -19,7 +19,7 @@ try {
     $active_only = isset($_GET['active']) ? (bool)$_GET['active'] : true;
     
     // Build query
-    // Check if contact columns exist (added in later migration)
+    // Check if contact columns exist
     $hasContactCols = false;
     try {
         $check = $pdo->query("SHOW COLUMNS FROM events LIKE 'contact_name'");
@@ -30,11 +30,41 @@ try {
         ? ", contact_name, contact_phone, contact_email"
         : ", NULL as contact_name, NULL as contact_phone, NULL as contact_email";
 
+    // Check if custom_fields column exists
+    $hasCustomFields = false;
+    try {
+        $check = $pdo->query("SHOW COLUMNS FROM events LIKE 'custom_fields'");
+        $hasCustomFields = $check->rowCount() > 0;
+    } catch (Exception $e) {}
+
+    $customFieldsSelect = $hasCustomFields ? ", custom_fields" : ", NULL as custom_fields";
+
+    // Check if event_details column exists
+    $hasEventDetails = false;
+    try {
+        $check = $pdo->query("SHOW COLUMNS FROM events LIKE 'event_details'");
+        $hasEventDetails = $check->rowCount() > 0;
+    } catch (Exception $e) {}
+
+    $eventDetailsSelect = $hasEventDetails ? ", event_details" : ", NULL as event_details";
+
+    // Check if extra_info column exists
+    $hasExtraInfo = false;
+    try {
+        $check = $pdo->query("SHOW COLUMNS FROM events LIKE 'extra_info'");
+        $hasExtraInfo = $check->rowCount() > 0;
+    } catch (Exception $e) {}
+
+    $extraInfoSelect = $hasExtraInfo ? ", extra_info" : ", NULL as extra_info";
+
     $sql = "SELECT 
                 id, slug, title, description, location, image, 
                 date, start_time, type, is_paid, amount, currency,
                 is_active, created_at
                 {$contactSelect}
+                {$customFieldsSelect}
+                {$eventDetailsSelect}
+                {$extraInfoSelect}
             FROM events 
             WHERE 1=1";
     
@@ -65,6 +95,8 @@ try {
             'slug' => $event['slug'],
             'title' => $event['title'],
             'description' => $event['description'],
+            'event_details' => $event['event_details'] ?? null,
+            'extra_info' => !empty($event['extra_info']) ? json_decode($event['extra_info'], true) : [],
             'location' => $event['location'],
             'image' => $event['image'],
             'date' => $event['date'],
@@ -77,6 +109,7 @@ try {
             'contact_name'  => $event['contact_name'] ?? null,
             'contact_phone' => $event['contact_phone'] ?? null,
             'contact_email' => $event['contact_email'] ?? null,
+            'custom_fields' => !empty($event['custom_fields']) ? json_decode($event['custom_fields'], true) : [],
             'created_at' => $event['created_at'],
             'price' => $event['amount'] ? (float)$event['amount'] : 0,
             'formatted_date' => date('M j, Y', strtotime($event['date'])),

@@ -26,6 +26,18 @@ $stmt = $db->prepare($sql);
 $stmt->execute($params);
 $regs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch custom answers for all registrations
+$regIds = array_column($regs, 'id');
+$customAnswersMap = [];
+if (!empty($regIds)) {
+    $placeholders = implode(',', array_fill(0, count($regIds), '?'));
+    $answerStmt = $db->prepare("SELECT registration_id, field_label, field_value FROM registration_custom_answers WHERE registration_id IN ({$placeholders}) ORDER BY id ASC");
+    $answerStmt->execute($regIds);
+    foreach ($answerStmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $customAnswersMap[$row['registration_id']][] = $row;
+    }
+}
+
 function idProofUrl(string $path): string {
     $path = str_replace('\\', '/', $path);
     $path = preg_replace('#^(\.\./)+uploads/id-proofs/#', '', $path);
@@ -60,51 +72,61 @@ function paymentBadge(array $r): string {
 if (isset($_GET['export']) && $_GET['export'] === 'csv') {
     header('Content-Type: text/csv; charset=UTF-8');
     header('Content-Disposition: attachment; filename="registrations_' . date('Ymd_His') . '.csv"');
-    // BOM for Excel UTF-8 compatibility
     echo "\xEF\xBB\xBF";
     $out = fopen('php://output', 'w');
-    fputcsv($out, [
+
+    // Build dynamic headers — collect all unique custom field labels
+    $allCustomLabels = [];
+    foreach ($regs as $r) {
+        $answers = $customAnswersMap[$r['id']] ?? [];
+        foreach ($answers as $a) {
+            if (!in_array($a['field_label'], $allCustomLabels)) {
+                $allCustomLabels[] = $a['field_label'];
+            }
+        }
+    }
+
+    $headers = [
         'ID', 'Event', 'Registration Type', 'Payment Status',
         'First Name', 'Last Name', 'Full Name', 'Email', 'Mobile',
         'Age', 'Gender', 'Date of Birth', 'Address',
         'T-Shirt Size', 'Runner Group',
         'Emergency Contact Name', 'Emergency Contact Mobile',
-        'Order ID', 'ID Proof',
-        'Registered On'
-    ]);
+        'Order ID', 'ID Proof', 'Registered On'
+    ];
+    foreach ($allCustomLabels as $label) $headers[] = $label;
+    fputcsv($out, $headers);
+
     foreach ($regs as $r) {
-        // Determine payment status label
         $type    = $r['registration_type'] ?? 'free';
         $ispaid  = $r['ispaid'] ?? 0;
         $pstatus = $r['payment_status'] ?? null;
-        if ($type === 'free')       $payLabel = 'Free';
-        elseif ($ispaid)            $payLabel = 'Paid';
+        if ($type === 'free')           $payLabel = 'Free';
+        elseif ($ispaid)                $payLabel = 'Paid';
         elseif ($pstatus === 'created') $payLabel = 'Pending';
         elseif ($pstatus === 'failed')  $payLabel = 'Failed';
-        else                        $payLabel = 'Unpaid';
+        else                            $payLabel = 'Unpaid';
 
-        fputcsv($out, [
-            $r['id'],
-            $r['event_title'] ?? '',
-            ucfirst($type),
-            $payLabel,
-            $r['first_name'] ?? '',
-            $r['last_name'] ?? '',
-            $r['full_name'] ?? '',
-            $r['email'] ?? '',
-            $r['mobile_number'] ?? '',
-            $r['age'] ?? '',
-            ucfirst($r['gender'] ?? ''),
-            $r['date_of_birth'] ?? '',
-            $r['address'] ?? '',
-            $r['tshirt_size'] ?? '',
-            $r['runner_group'] ?? '',
-            $r['emergency_contact_name'] ?? '',
-            $r['emergency_contact_mobile'] ?? '',
-            $r['order_id'] ?? '',
-            $r['id_proof'] ? 'Yes' : 'No',
+        $row = [
+            $r['id'], $r['event_title'] ?? '', ucfirst($type), $payLabel,
+            $r['first_name'] ?? '', $r['last_name'] ?? '', $r['full_name'] ?? '',
+            $r['email'] ?? '', $r['mobile_number'] ?? '', $r['age'] ?? '',
+            ucfirst($r['gender'] ?? ''), $r['date_of_birth'] ?? '', $r['address'] ?? '',
+            $r['tshirt_size'] ?? '', $r['runner_group'] ?? '',
+            $r['emergency_contact_name'] ?? '', $r['emergency_contact_mobile'] ?? '',
+            $r['order_id'] ?? '', $r['id_proof'] ? 'Yes' : 'No',
             $r['created_at'] ? date('d M Y H:i', strtotime($r['created_at'])) : ''
-        ]);
+        ];
+
+        // Add custom field values in correct column order
+        $answers = $customAnswersMap[$r['id']] ?? [];
+        $answersByLabel = [];
+        foreach ($answers as $a) $answersByLabel[$a['field_label']] = $a['field_value'];
+        foreach ($allCustomLabels as $label) {
+            $row[] = $answersByLabel[$label] ?? '';
+        }
+
+        fputcsv($out, $row);
     }
     fclose($out);
     exit;
@@ -162,7 +184,7 @@ require_once __DIR__ . '/includes/header.php';
                     <td>
                         <strong><?= sanitize($r['full_name'] ?? '-') ?></strong>
                         <?php if ($r['age']): ?>
-                        <small class="text-muted d-block"><?= (int)$r['age'] ?> yrs, <?= sanitize($r['gender'] ?? '') ?></small>
+                        <small class="text-muted d-block"><?= (int)$r['age'] ?> yrs, <?= sanitize($r[''] ?? '') ?></small>
                         <?php endif; ?>
                     </td>
                     <td>
@@ -193,6 +215,15 @@ require_once __DIR__ . '/includes/header.php';
                     <td>
                         <?= date('d M Y', strtotime($r['created_at'])) ?>
                         <small class="text-muted d-block"><?= date('g:i A', strtotime($r['created_at'])) ?></small>
+                        <?php if (!empty($customAnswersMap[$r['id']])): ?>
+                        <div style="margin-top:0.4rem;">
+                            <?php foreach ($customAnswersMap[$r['id']] as $ans): ?>
+                            <small class="d-block" style="color:var(--muted);font-size:0.72rem;">
+                                <strong><?= sanitize($ans['field_label']) ?>:</strong> <?= sanitize($ans['field_value']) ?>
+                            </small>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -238,6 +269,17 @@ require_once __DIR__ . '/includes/header.php';
                 <i class="fas fa-clock"></i>
                 <span><?= date('d M Y, g:i A', strtotime($r['created_at'])) ?></span>
             </div>
+
+            <?php if (!empty($customAnswersMap[$r['id']])): ?>
+            <div style="padding:0.5rem 0;border-top:1px dashed var(--border);margin-top:0.25rem;">
+                <?php foreach ($customAnswersMap[$r['id']] as $ans): ?>
+                <div class="reg-card-row">
+                    <i class="fas fa-tag"></i>
+                    <span><strong><?= sanitize($ans['field_label']) ?>:</strong> <?= sanitize($ans['field_value']) ?></span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
 
             <?php if (!empty($r['id_proof'])): ?>
             <div class="reg-card-proof">

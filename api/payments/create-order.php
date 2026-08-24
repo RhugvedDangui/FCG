@@ -152,6 +152,20 @@ $stmt->execute([
     // Get the registration ID for linking
     $registration_id = $conn->lastInsertId();
 
+    // Save custom field answers
+    $customAnswers = $_POST['custom_field_answers'] ?? '';
+    if ($customAnswers) {
+        $answers = json_decode($customAnswers, true);
+        if (is_array($answers)) {
+            $stmt = $conn->prepare("INSERT INTO registration_custom_answers (registration_id, field_label, field_value) VALUES (?, ?, ?)");
+            foreach ($answers as $answer) {
+                if (!empty($answer['label'])) {
+                    $stmt->execute([$registration_id, $answer['label'], $answer['value'] ?? '']);
+                }
+            }
+        }
+    }
+
     // 9️⃣ Handle file upload (temporarily store in filesystem until DB is updated)
     if ($uploadedFileInfo) {
         // Get event data for directory naming

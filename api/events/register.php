@@ -111,6 +111,20 @@ try {
 
     $registrationId = $conn->lastInsertId();
 
+    // Save custom field answers
+    $customAnswers = $_POST['custom_field_answers'] ?? '';
+    if ($customAnswers) {
+        $answers = json_decode($customAnswers, true);
+        if (is_array($answers)) {
+            $stmt = $conn->prepare("INSERT INTO registration_custom_answers (registration_id, field_label, field_value) VALUES (?, ?, ?)");
+            foreach ($answers as $answer) {
+                if (!empty($answer['label'])) {
+                    $stmt->execute([$registrationId, $answer['label'], $answer['value'] ?? '']);
+                }
+            }
+        }
+    }
+
     // Handle file upload
     if ($uploadedFileInfo) {
         $eventSlug = preg_replace('/[^a-z0-9_]/', '', strtolower(str_replace([' ','-'], '_', $event['title'])));
