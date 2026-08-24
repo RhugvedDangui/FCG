@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="main-navigation">
                 <nav class="nav-menu">
                     <a href="index.html#home" class="nav-link">Home</a>
-                    <a href="index.html#about" class="nav-link">About Us</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="about.html" class="nav-link">About Us</a>
+                    <!-- <a href="gallery.html" class="nav-link">Gallery</a> -->
                     <!-- <a href="blog.html" class="nav-link">Blog</a> -->
                     <!-- <a href="challenge.html" class="nav-link">Challenge</a> -->
                     <a href="events.html" class="nav-link">Events</a>
@@ -48,14 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="link-text">Home</span>
                         <span class="link-icon"><i class="fas fa-home"></i></span>
                     </a>
-                    <a href="index.html#about" class="mobile-nav-link" data-text="About Us">
+                    <a href="about.html" class="mobile-nav-link" data-text="About Us">
                         <span class="link-text">About Us</span>
                         <span class="link-icon"><i class="fas fa-users"></i></span>
                     </a>
-                    <a href="gallery.html" class="mobile-nav-link" data-text="Gallery">
+                    <!-- <a href="gallery.html" class="mobile-nav-link" data-text="Gallery">
                         <span class="link-text">Gallery</span>
                         <span class="link-icon"><i class="fas fa-images"></i></span>
-                    </a>
+                    </a> -->
                     <!-- <a href="blog.html" class="mobile-nav-link" data-text="Blog">
                         <span class="link-text">Blog</span>
                         <span class="link-icon"><i class="fas fa-blog"></i></span>

@@ -149,11 +149,44 @@ class EventRegistration {
         // Update event info section
         document.getElementById('eventTitle').textContent = event.title;
         const descEl = document.getElementById('eventDescription');
-        if (descEl) descEl.textContent = event.description || 'Join us for this exciting fitness event!';
+        const descBlock = document.getElementById('eventDescriptionBlock');
+        if (descEl && event.description) {
+            descEl.textContent = event.description;
+            if (descBlock) descBlock.style.display = 'block';
+        }
         const dateEl = document.getElementById('eventDate');
         if (dateEl) dateEl.innerHTML = `<i class="fas fa-calendar-alt"></i> ${event.formatted_date || event.date}`;
         const locEl = document.getElementById('eventLocation');
         if (locEl) locEl.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${event.location || 'Goa'}`;
+
+        // Render event_details — strip HTML tags, show plain text
+        const detailsBlock = document.getElementById('eventDetailsBlock');
+        const detailsContent = document.getElementById('eventDetailsContent');
+        if (detailsContent && event.event_details) {
+            // Strip HTML, extract readable text
+            const tmp = document.createElement('div');
+            tmp.innerHTML = event.event_details;
+            // Build structured display from text nodes and headings
+            let html = '';
+            tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,th').forEach(el => {
+                const tag = el.tagName.toLowerCase();
+                const text = el.textContent.trim();
+                if (!text) return;
+                if (['h1','h2','h3','h4','h5','h6'].includes(tag)) {
+                    html += `<div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);margin:0.75rem 0 0.25rem;text-transform:uppercase;letter-spacing:0.05em;">${text}</div>`;
+                } else if (tag === 'li') {
+                    html += `<div style="font-size:0.82rem;color:var(--text-secondary);padding:0.15rem 0 0.15rem 1rem;position:relative;">
+                        <span style="position:absolute;left:0;color:#FF6B35;">•</span>${text}
+                    </div>`;
+                } else {
+                    html += `<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin-bottom:0.2rem;">${text}</div>`;
+                }
+            });
+            if (html) {
+                detailsContent.innerHTML = `<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem;">${html}</div>`;
+                if (detailsBlock) detailsBlock.style.display = 'block';
+            }
+        }
         
         // Update price and payment section
         const priceElement = document.getElementById('eventPrice');
@@ -530,7 +563,7 @@ class EventRegistration {
                 this.showFieldError(field, 'Please enter a valid phone number');
                 isValid = false;
             } else if (field.type === 'file' && !this.isValidFile(field)) {
-                this.showFieldError(field, 'Please upload a valid ID proof (JPG, PNG, PDF, max 5MB)');
+                this.showFieldError(field, 'Please upload a valid ID proof (JPG, PNG, max 5MB)');
                 isValid = false;
             }
         });
@@ -559,10 +592,8 @@ class EventRegistration {
     isValidFile(fileInput) {
         const file = fileInput.files[0];
         if (!file) return false;
-        
-        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         const maxSize = 5 * 1024 * 1024; // 5MB
-        
         return allowedTypes.includes(file.type) && file.size <= maxSize;
     }
 }

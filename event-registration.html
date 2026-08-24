@@ -82,6 +82,16 @@
                     </div>
                 </div>
 
+                <!-- Event Description -->
+                <div id="eventDescriptionBlock" style="display:none; margin-bottom:1rem; padding:0.85rem 1.1rem; background:rgba(255,255,255,0.04); border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+                    <p id="eventDescription" style="margin:0; font-size:0.875rem; color:var(--text-secondary); line-height:1.7;"></p>
+                </div>
+
+                <!-- Event Details HTML (rendered HTML from admin) -->
+                <div id="eventDetailsBlock" style="display:none; margin-bottom:1rem;">
+                    <div id="eventDetailsContent"></div>
+                </div>
+
                 <!-- Registration Form -->
                 <form id="registrationForm" class="registration-form">
                     <!-- Personal Information -->
@@ -179,8 +189,8 @@
                         </h3>
                         <div class="form-group">
                             <label for="idProof">ID Proof with Birth Date *</label>
-                            <input type="file" id="idProof" name="idProof" accept=".jpg,.jpeg,.png,.pdf" required>
-                            <small class="form-help">Upload a clear photo/scan of your ID proof (Aadhaar Card, Passport, Driving License, etc.) that shows your birth date. Accepted formats: JPG, PNG, PDF (Max 5MB)</small>
+                            <input type="file" id="idProof" name="idProof" accept=".jpg,.jpeg,.png" required>
+                            <small class="form-help">Upload a clear photo of your ID proof (Aadhaar Card, Passport, Driving License, etc.) that shows your birth date. Accepted formats: JPG, PNG (Max 5MB)</small>
                         </div>
                     </div>
 

@@ -95,10 +95,10 @@ try {
     
     if (isset($_FILES['idProof']) && $_FILES['idProof']['error'] === UPLOAD_ERR_OK) {
         $fileExtension = strtolower(pathinfo($_FILES['idProof']['name'], PATHINFO_EXTENSION));
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+        $allowedExtensions = ['jpg', 'jpeg', 'png'];
         
         if (!in_array($fileExtension, $allowedExtensions)) {
-            throw new Exception('Invalid file type. Only JPG, PNG, and PDF files are allowed.');
+            throw new Exception('Invalid file type. Only JPG and PNG images are allowed.');
         }
 
         if ($_FILES['idProof']['size'] > 5 * 1024 * 1024) { // 5MB limit
