@@ -148,45 +148,44 @@ class EventRegistration {
         
         // Update event info section
         document.getElementById('eventTitle').textContent = event.title;
-        const descEl = document.getElementById('eventDescription');
-        const descBlock = document.getElementById('eventDescriptionBlock');
-        if (descEl && event.description) {
-            descEl.textContent = event.description;
-            if (descBlock) descBlock.style.display = 'block';
-        }
         const dateEl = document.getElementById('eventDate');
         if (dateEl) dateEl.innerHTML = `<i class="fas fa-calendar-alt"></i> ${event.formatted_date || event.date}`;
         const locEl = document.getElementById('eventLocation');
         if (locEl) locEl.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${event.location || 'Goa'}`;
 
-        // Render event_details — extract text, display with site theme
+        // Description inline
+        const descEl = document.getElementById('eventDescription');
+        if (descEl && event.description) {
+            descEl.textContent = event.description;
+            descEl.style.display = 'block';
+        }
+
+        // Extra info as inline tags inside the card
+        this.renderExtraInfo(event.extra_info || []);
+
+        // Event details extracted text inline
         const detailsBlock = document.getElementById('eventDetailsBlock');
         const detailsContent = document.getElementById('eventDetailsContent');
         if (detailsContent && event.event_details) {
             const tmp = document.createElement('div');
             tmp.innerHTML = event.event_details;
-
-            // Remove style tags
             tmp.querySelectorAll('style, script').forEach(el => el.remove());
-
             let html = '';
-            // Walk all elements, pick meaningful text
             tmp.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li').forEach(el => {
                 const tag = el.tagName.toLowerCase();
                 const text = el.textContent.trim();
                 if (!text) return;
                 if (['h1','h2','h3','h4','h5','h6'].includes(tag)) {
-                    html += `<p style="font-weight:700;font-size:0.8rem;color:var(--text-primary);margin:0.6rem 0 0.2rem;text-transform:uppercase;letter-spacing:0.06em;">${text}</p>`;
+                    html += `<p style="font-weight:700;font-size:0.78rem;color:var(--text-primary);margin:0.5rem 0 0.15rem;text-transform:uppercase;letter-spacing:0.06em;">${text}</p>`;
                 } else if (tag === 'li') {
-                    html += `<p style="font-size:0.82rem;color:var(--text-secondary);margin:0.15rem 0 0.15rem 0.75rem;"><span style="color:#FF6B35;margin-right:6px;">•</span>${text}</p>`;
+                    html += `<p style="font-size:0.78rem;color:var(--text-secondary);margin:0.1rem 0 0.1rem 0.75rem;"><span style="color:#FF6B35;margin-right:5px;">•</span>${text}</p>`;
                 } else {
-                    html += `<p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0.1rem 0;">${text}</p>`;
+                    html += `<p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;margin:0.1rem 0;">${text}</p>`;
                 }
             });
-
             if (html) {
-                detailsContent.innerHTML = `<div style="border:1px solid rgba(255,107,53,0.15);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1rem;">${html}</div>`;
-                if (detailsBlock) detailsBlock.style.display = 'block';
+                detailsContent.innerHTML = html;
+                detailsBlock.style.display = 'block';
             }
         }
         
@@ -216,34 +215,17 @@ class EventRegistration {
     }
 
     renderExtraInfo(extraInfo) {
-        const existing = document.getElementById('extraInfoSection');
-        if (existing) existing.remove();
+        const div = document.getElementById('extraInfoSection');
+        if (!div) return;
         if (!extraInfo || !extraInfo.length) return;
 
-        const div = document.createElement('div');
-        div.id = 'extraInfoSection';
-        div.style.cssText = 'margin-bottom:1rem;';
-
+        div.style.display = 'flex';
         div.innerHTML = extraInfo.map(block => `
-            <div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.75rem;">
-                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">
-                    <i class="fas fa-info-circle" style="color:#FF6B35;font-size:0.85rem;"></i>
-                    <strong style="font-size:0.85rem;color:var(--text-primary);">${block.label || ''}</strong>
-                </div>
-                <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;white-space:pre-line;">${block.content || ''}</div>
+            <div style="font-size:0.78rem;color:var(--text-secondary);background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);border-radius:6px;padding:0.25rem 0.6rem;display:flex;align-items:center;gap:0.35rem;">
+                <span style="color:#FF6B35;font-weight:600;">${block.label || ''}:</span>
+                <span>${block.content || ''}</span>
             </div>
         `).join('');
-
-        // Insert above the event info section (title/date/price bar)
-        const eventInfoSection = document.querySelector('.event-info-section');
-        if (eventInfoSection) {
-            eventInfoSection.parentNode.insertBefore(div, eventInfoSection);
-        } else {
-            // fallback — insert before form
-            const form = document.getElementById('registrationForm');
-            const firstSection = form.querySelector('.form-section');
-            form.insertBefore(div, firstSection);
-        }
     }
 
     renderCustomFields(fields) {

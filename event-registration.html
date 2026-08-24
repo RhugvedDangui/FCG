@@ -67,29 +67,27 @@
 
             <!-- Registration Form Container -->
             <div class="form-container" id="formContainer" style="display: none;">
-                <!-- Event Info Section -->
-                <div class="event-info-section">
+                <!-- Event Info Card -->
+                <div class="event-info-section" id="eventInfoCard">
                     <div class="event-info-left">
                         <h4 id="eventTitle"></h4>
                         <div class="event-info-meta">
                             <span id="eventDate"><i class="fas fa-calendar-alt"></i> --</span>
                             <span id="eventLocation"><i class="fas fa-map-marker-alt"></i> --</span>
                         </div>
+                        <!-- Description shown inline -->
+                        <p id="eventDescription" style="display:none;margin:0.5rem 0 0;font-size:0.82rem;color:var(--text-secondary);line-height:1.6;"></p>
+                        <!-- Extra info shown inline as tags/rows -->
+                        <div id="extraInfoSection" style="display:none;margin-top:0.6rem;display:flex;flex-wrap:wrap;gap:0.4rem;"></div>
+                        <!-- Event details extracted text -->
+                        <div id="eventDetailsBlock" style="display:none;margin-top:0.6rem;">
+                            <div id="eventDetailsContent"></div>
+                        </div>
                     </div>
                     <div class="event-price-info">
                         <span class="price-label">Fee</span>
                         <span class="price-amount" id="eventPrice">₹0</span>
                     </div>
-                </div>
-
-                <!-- Event Description -->
-                <div id="eventDescriptionBlock" style="display:none; margin-bottom:1rem; padding:0.85rem 1.1rem; background:rgba(255,255,255,0.04); border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
-                    <p id="eventDescription" style="margin:0; font-size:0.875rem; color:var(--text-secondary); line-height:1.7;"></p>
-                </div>
-
-                <!-- Event Details HTML (rendered HTML from admin) -->
-                <div id="eventDetailsBlock" style="display:none; margin-bottom:1rem;">
-                    <div id="eventDetailsContent"></div>
                 </div>
 
                 <!-- Registration Form -->
